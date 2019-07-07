@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import firebase from '../Firebase/Firebase';
+import firebase, { Banco } from '../Firebase/Firebase';
+import { setInterval } from 'timers';
 
 export default class FormCadastro extends Component {
 
@@ -57,31 +58,30 @@ export default class FormCadastro extends Component {
         let CPF = this.state.CPF.trim();
         let Estado = this.state.Estado.trim();
         let Cidade = this.state.Cidade.trim();
-        let Senha = this.state.Senha.trim();        
+        let Senha = this.state.Senha.trim();
+        let id;     
 
-        firebase.auth().createUserWithEmailAndPassword(Email, Senha)
-            .then(() => {
-                alert("Cadastro feito com sucesso!");
-                window.location.href = "/login";
-            })
-            .catch( erro => {
-                //tratar erro no login
-                alert("Erro ao cadastrar!!");
-            });
+        //Usuário sai logado já
+        Banco.criarUsuario(Email, Senha);
 
-        firebase.database().ref("Cliente").push(
-            {
-                Nome: Nome, 
-                Email: Email, 
-                CPF: CPF,
-                Estado: Estado, 
-                Cidade: Cidade, 
-                Senha: Senha,
-                Adm: false                
-            }
-        ).catch((erro) => console.log(erro));
-                
-    }
+        setInterval(() => {
+            id = Banco.pegarIdUsuario();
+            firebase.database().ref("Cliente").child(id).set(
+                {
+                    Nome: Nome, 
+                    Email: Email, 
+                    CPF: CPF,
+                    Estado: Estado, 
+                    Cidade: Cidade, 
+                    Senha: Senha,
+                    Adm: false                
+                }).then(() => {
+                    alert("Cadastro feito com sucesso!");
+                    window.location.href = '/';
+                })
+                .catch((erro) => console.log(erro)); 
+        }, 5000);                            
+    }   
 
 
     render () {

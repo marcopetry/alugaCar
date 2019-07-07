@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Button, Table } from 'react-bootstrap';
+import { Form, Button, Table, ButtonToolbar } from 'react-bootstrap';
 import firebase from '../Firebase/Firebase';
+import { Link } from 'react-router-dom';
+import Login from '../views/Login';
+import AcoesCarro from './AcoesCarro';
 
 export default class FormCadastro extends Component {
 
@@ -122,54 +125,128 @@ export default class FormCadastro extends Component {
     }
 }
 
+
+
+
+
+
+
+
+
 export class ListaCarros extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {Carros_Cadastrados: []};
+        this.state = {Carros_Cadastrados: [], CarroSelecionado: '', marcado: false};
+        this.desmarcar_checkbox = this.desmarcar_checkbox.bind(this);
+        this.setSelecionado = this.setSelecionado.bind(this);
     }
 
     componentDidMount() {
         let lista_carros = [];
+        let teste = {};
         firebase.database().ref('Carro').on("child_added", (snapshot, prevChildKey) => {
-            let carro = snapshot.val();
-            console.log(snapshot);            
-            lista_carros.push(carro);
+            let carro = snapshot.val();            
+            teste = {
+                Chave: snapshot.key,
+                Carro: carro
+            };
+            lista_carros.push(teste);
             this.setState({Carros_Cadastrados: lista_carros});                                    
+        });
+    }   
+
+    
+    handleFormSubmit = formSubmitEvent => {
+
+        formSubmitEvent.preventDefault();
+        console.log("You have submitted:", this.state.CarroSelecionado);
+            if(this.state.CarroSelecionado){
+                firebase.database().ref("Carro/" + this.state.CarroSelecionado + "/DatasDisponiveis").set(
+                    {
+                        Data: '15/05/2020',
+                        Hora: '8:00'
+                    }
+                ).then(() => {                                    
+                    alert('Veículo cadastrado com sucesso!');      
+                    //this.limpar_campos();      
+                })
+                .catch( erro => {
+                    alert('Problemas no cadastro do veículo');
+                    console.log(erro);
+                })
+            }
+    };
+
+    setSelecionado = changeEvent => {    
+        this.setState({
+            CarroSelecionado: changeEvent.target.value
+        });            
+    };
+
+    desmarcar_checkbox() {        
+        this.setState({
+            CarroSelecionado: ''
         });
     }
 
     render () {
-        return (
-            <div className="col-10 m-auto pt-5">          
-                <h1>Carros disponíveis</h1>      
-                <Table striped bordered hover size="sm">                    
-                    <thead>                    
-                        <tr>
-                            <th>Modelo</th>
-                            <th>Ano</th>
-                            <th>Cor</th>
-                            <th>Valor da diária</th>
-                        </tr>
-                    </thead>
-                    <tbody>                                        
-                        {
+        if(this.state.CarroSelecionado) {
+            return (
+               <AcoesCarro nome={this.state.CarroSelecionado} />
+            );
+        } else {
+            return (
+                <div className="col-10 m-auto pt-5">          
+                    <h1>Carros disponíveis</h1>
+                    <Form onSubmit={this.handleFormSubmit}>
+                        <Table striped bordered hover size="lg" variant="secondary" className="text-center">                    
+                            <thead>                    
+                                <tr>
+                                    <th>Selecione</th>
+                                    <th>Modelo</th>
+                                    <th>Ano</th>
+                                    <th>Cor</th>
+                                    <th>Valor da diária</th>
+                                </tr>
+                            </thead>
+                            <tbody>                                        
+                                {                                                                                          
+                                    this.state.Carros_Cadastrados.map( Carros_Cadastrados => {   
+                                        if(true) {
+                                            console.log('trouxa');
+                                        }                             
+                                        return (
+                                                
+                                                <tr key={Carros_Cadastrados.Chave} > 
+                                                    <td>
+                                                        <Form.Check.Input 
+                                                            value={Carros_Cadastrados.Chave} 
+                                                            type="radio" 
+                                                            name="carro"
+                                                            checked={this.state.CarroSelecionado === Carros_Cadastrados.Chave} 
+                                                            onChange={this.setSelecionado}/>
+                                                    </td>
 
-                            this.state.Carros_Cadastrados.map( Carros_Cadastrados => {                                
-                                return (
+                                                    <td>{Carros_Cadastrados.Carro.Modelo}</td>
+                                                    <td>{Carros_Cadastrados.Carro.Ano}</td>
+                                                    <td>{Carros_Cadastrados.Carro.Cor}</td>
+                                                    <td>{Carros_Cadastrados.Carro.Valor}</td>                                                                                                                                                                                                                                                                                                                                                                                    
+                                                </tr>                                                                                                                   
+                                        );
+                                    })
                                     
-                                    <tr key={Carros_Cadastrados.key}>                                        
-                                        <td>{Carros_Cadastrados.Modelo}</td>
-                                        <td>{Carros_Cadastrados.Ano}</td>
-                                        <td>{Carros_Cadastrados.Cor}</td>
-                                        <td>{Carros_Cadastrados.Valor}</td>                                                                                
-                                    </tr>                                    
-                                );
-                            })
-                        }                                           
-                    </tbody>
-                </Table>
-            </div>
-        );
+                                }                                           
+                            </tbody>
+                        </Table>
+                        <ButtonToolbar className="justify-content-between">                        
+                            <Button as="input" type="submit" value="Reservar" variant="secondary" onClick={this.teste}/>                        
+                            <Button as="input" type="button" value="Incluir Horário" variant="secondary" onClick={this.teste} />
+                            <Button as="input" type="button" value="Cancelar" variant="secondary" onClick={this.desmarcar_checkbox} />                        
+                        </ButtonToolbar>
+                    </Form>                 
+                </div>
+            );
+        }
     }
 }

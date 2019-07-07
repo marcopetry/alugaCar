@@ -9,6 +9,7 @@ export default class Home extends Component {
                 <Row>                
                     <Col>
                         <Image src="imagens/carro-cabecalho.png" fluid/> 
+                        <h1>{this.props.nome}</h1>
                     </Col>
                 </Row>
             </Container>

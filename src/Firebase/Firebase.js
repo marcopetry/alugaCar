@@ -12,6 +12,48 @@ var firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig)
 
-  export default firebase;
+export default firebase;
 
+export class Banco {
   
+  
+  static login(email, senha) {
+  
+    firebase.auth().signInWithEmailAndPassword(email, senha)
+            .then(user => {
+                alert("Bem vindo!");
+            })
+            .catch((error) => {
+                alert("Erro ao logar");
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorCode);
+                console.log(errorMessage);
+        });
+      return true;
+    }
+  
+    static pegarIdUsuario() {
+      let usuario = firebase.auth().currentUser;
+    
+      if (usuario) {      
+          return usuario.uid;
+      } else {
+          return null;
+      }
+    
+  }
+
+  static criarUsuario(email, senha) {
+    firebase.auth().createUserWithEmailAndPassword(email, senha)
+            .then(() => {
+              Banco.login(email, senha);
+            })
+            .catch((erro) => {
+                console.log(erro);
+                alert('Usuário não cadastrado!')
+            });
+  }
+
+
+}

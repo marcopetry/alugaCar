@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import FormCarro, { ListaCarros } from '../componentes/FormCarro';
-
+import FormCarro, { ListaCarros }  from '../componentes/FormCarro';
 
 export default class Carro extends Component {
 
