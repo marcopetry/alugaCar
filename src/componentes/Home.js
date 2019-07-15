@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Image } from 'react-bootstrap';
+import Cabecalho from '../adm/CabecalhoADM';
 
 export default class Home extends Component {
 

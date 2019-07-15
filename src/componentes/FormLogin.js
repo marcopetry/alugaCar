@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Banco } from '../Firebase/Firebase' 
+import Banco from '../Firebase/ApiBanco' 
 import { Redirect } from 'react-router-dom';
+import Carro from '../adm/Carro';
+import Cabecalho from '../adm/CabecalhoADM';
 
 export default class FormLogin extends Component {
 
@@ -35,11 +37,15 @@ export default class FormLogin extends Component {
 
 
     render () {
-        if(this.state.logado){
-            return <Redirect to="/" />
-        }
-        else {
+        /* if(this.state.logado){            
             return (
+                //window.location.href = "/"
+                <Redirect to="/"/>
+            );
+        }
+        else { */
+            return (
+                <div>
                 <Form className="col-6 m-auto pt-5" onSubmit={this.logar}>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email</Form.Label>
@@ -61,7 +67,8 @@ export default class FormLogin extends Component {
                         Logar
                     </Button>
                 </Form>
+                </div>
             );
-        }
+       // }
     }
 }

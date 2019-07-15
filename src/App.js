@@ -1,29 +1,32 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Cabecalho from './componentes/Cabecalho';
+import CabecalhoADM from './adm/CabecalhoADM';
 import Rodape from './componentes/Rodape';
 
-import Home from './views/Home';
-import Login from './views/Login';
-import Cadastro from './views/Cadastro';
-import Carro from './views/Carro';
-import Reservas from './views/Reservas';
+import Home from './componentes/Home';
+import Carro from './adm/Carro';
+import CadastroCarro from './adm/CadastroCarro';
+import FormLogin from './componentes/FormLogin';
+import FormCadastro from './componentes/FormCadastro';
 
 function App() {
-  return (
-    <BrowserRouter>
-        <Cabecalho />
-        <Switch>
+
+  return (    
+      <BrowserRouter>
+        <CabecalhoADM />
+        <Switch>          
+          
           <Route exact path="/" component={Home} />
-          <Route path="/inserir_carro" component={Carro} /> 
-          <Route path="/cadastro" component={Cadastro} />                  
-          <Route path="/login" component={Login} />
-          <Route path="/reservar" component={Reservas} />
+          <Route path="/cadastrar" component={FormCadastro} />
+          <Route path="/login" component={FormLogin} />
+          <Route path="/carros" component={Carro} />
+          <Route path="/inserir_carro" component={CadastroCarro} />
         </Switch>
         <Rodape />
-      </BrowserRouter>
+      </BrowserRouter>    
   );
 }
 
 export default App;
+//        <CabecalhoADM />

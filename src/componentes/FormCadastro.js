@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import firebase, { Banco } from '../Firebase/Firebase';
-import { setInterval } from 'timers';
+import Banco from '../Firebase/ApiBanco';
 
 export default class FormCadastro extends Component {
 
@@ -59,33 +58,16 @@ export default class FormCadastro extends Component {
         let Estado = this.state.Estado.trim();
         let Cidade = this.state.Cidade.trim();
         let Senha = this.state.Senha.trim();
-        let id;     
 
         //Usuário sai logado já
         Banco.criarUsuario(Email, Senha);
-
-        setInterval(() => {
-            id = Banco.pegarIdUsuario();
-            firebase.database().ref("Cliente").child(id).set(
-                {
-                    Nome: Nome, 
-                    Email: Email, 
-                    CPF: CPF,
-                    Estado: Estado, 
-                    Cidade: Cidade, 
-                    Senha: Senha,
-                    Adm: false                
-                }).then(() => {
-                    alert("Cadastro feito com sucesso!");
-                    window.location.href = '/';
-                })
-                .catch((erro) => console.log(erro)); 
-        }, 5000);                            
+        Banco.cadastrarNovousuario(Nome, Email, CPF, Estado, Cidade, Senha);
     }   
 
 
     render () {
         return (
+            <div>
             <Form className="col-8 pt-5 m-auto" onSubmit={this.cadastrar}>
                 <Form.Group controlId="nome-cadastro">
                     <Form.Label>Nome completo:</Form.Label>
@@ -105,6 +87,7 @@ export default class FormCadastro extends Component {
                 <Form.Group controlId="estado-cadastro">
                     <Form.Label>Estado</Form.Label>
                     <Form.Control as="select" onChange={e => this.setEstado(e)}>
+                        <option >Selecione estado</option>
                         <option value="Paraná">Paraná</option>
                         <option value="Santa Catarina">Santa Catarina</option>
                         <option value="Rio Grande do Sul">Rio Grande do Sul</option>                    
@@ -114,6 +97,7 @@ export default class FormCadastro extends Component {
                 <Form.Group controlId="cidade-cadastro">
                     <Form.Label>Cidade</Form.Label>
                     <Form.Control as="select" onChange={e => this.setCidade(e)}>
+                        <option >Selecione cidade</option>
                         <option value="Dois Vizinhos">Dois Vizinhos</option>
                         <option value="Franscisco Beltrão">Franscisco Beltrão</option>
                         <option value="Parobé">Parobé</option>
@@ -131,6 +115,7 @@ export default class FormCadastro extends Component {
                 </Button>
                 
           </Form>
+          </div>
         );
     }
 }
