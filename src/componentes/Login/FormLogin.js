@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import Banco from '../Firebase/ApiBanco' 
+import Banco from '../../Firebase/ApiBanco' 
 import { Redirect } from 'react-router-dom';
 import Carro from '../adm/Carro';
-import Cabecalho from '../adm/CabecalhoADM';
+import Cabecalho from '../Cabecalho/CabecalhoADM';
 
 export default class FormLogin extends Component {
 

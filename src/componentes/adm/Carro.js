@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, Form, Modal, Jumbotron } from 'react-bootstrap';
-import TabelaCarros, { TabelaHorarios } from '../componentes/TabelaCarros';
+import TabelaCarros, { TabelaHorarios } from '../TabelaCarros';
 import CadastroCarro from './CadastroCarro';
 import { InserirData } from './CadastroCarro';
-import Banco from '../Firebase/ApiBanco'
-import { dadosRelatorio } from '../helper/helper';
-import Cabecalho from './CabecalhoADM';
+import Banco from '../../Firebase/ApiBanco'
+import { dadosRelatorio } from '../../helper/helper';
+import Cabecalho from '../Cabecalho/CabecalhoADM';
 import { Redirect } from 'react-router-dom';
 
 export default class Carro extends Component {

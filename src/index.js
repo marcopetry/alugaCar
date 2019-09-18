@@ -5,10 +5,7 @@ import * as serviceWorker from './serviceWorker';
 //import { Provider } from '';
 
 ReactDOM.render(
-
-    //<Provider store={Store}>
-        <App />
-    //</Provider>
+    <App />
     ,document.getElementById('root')
 
 );

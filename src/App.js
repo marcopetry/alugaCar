@@ -1,32 +1,29 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import CabecalhoADM from './adm/CabecalhoADM';
-import Rodape from './componentes/Rodape';
+import CabecalhoADM from './componentes/Cabecalho/CabecalhoADM';
 
-import Home from './componentes/Home';
-import Carro from './adm/Carro';
-import CadastroCarro from './adm/CadastroCarro';
-import FormLogin from './componentes/FormLogin';
-import FormCadastro from './componentes/FormCadastro';
+import Home from './componentes/Home/Home';
+import Carro from './componentes/adm/Carro';
+import CadastroCarro from './componentes/adm/CadastroCarro';
+import FormLogin from './componentes/Login/FormLogin';
+import FormCadastro from './componentes/CadastroUsuario/FormCadastro';
+import { Container } from 'react-bootstrap';
 
 function App() {
 
   return (    
-      <BrowserRouter>
-        <CabecalhoADM />
-        <Switch>          
-          
+      <BrowserRouter>        
+        <CabecalhoADM />        
+        <Switch>                    
           <Route exact path="/" component={Home} />
           <Route path="/cadastrar" component={FormCadastro} />
           <Route path="/login" component={FormLogin} />
           <Route path="/carros" component={Carro} />
           <Route path="/inserir_carro" component={CadastroCarro} />
-        </Switch>
-        <Rodape />
+        </Switch>       
       </BrowserRouter>    
   );
 }
 
 export default App;
-//        <CabecalhoADM />

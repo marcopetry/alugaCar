@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import Banco from '../Firebase/ApiBanco';
+import Banco from '../../Firebase/ApiBanco';
 
 export default class FormCadastro extends Component {
 

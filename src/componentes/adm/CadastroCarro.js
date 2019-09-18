@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import Banco from '../Firebase/ApiBanco';
-import Cabecalho from './CabecalhoADM';
+import Banco from '../../Firebase/ApiBanco';
+import Cabecalho from '../Cabecalho/CabecalhoADM';
 
 export default class CadastroCarro extends Component {
 

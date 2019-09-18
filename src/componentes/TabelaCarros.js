@@ -147,27 +147,3 @@ export class TabelaHorarios extends Component{
         );
     }
 }
-
-/* 
-                <Form.Group controlId="estado-cadastro">
-                    <Form.Label>Estado</Form.Label>
-                    <Form.Control as="select" onChange={e => this.setEstado(e)}>
-                        <option value="Paraná">Paraná</option>
-                        <option value="Santa Catarina">Santa Catarina</option>
-                        <option value="Rio Grande do Sul">Rio Grande do Sul</option>                    
-                    </Form.Control>
-                </Form.Group>
-*/
-
-/* <Form>
-                                    <Form.Group controlId={data.ChaveData}>
-                                        <Accordion.Collapse eventKey={this.props.Carro.Chave}>
-                                            <Card.Body>                                                                                                                                
-                                                <h5>Data: {data.Data.Data}</h5>
-                                                <h5>Hora: {data.Data.Hora}</h5>
-                                                <Button as="input" type="subbmit" value="Reservar" variant="secondary" className="mr-3" onClick={this.teste}/>
-                                                <hr></hr>
-                                            </Card.Body>                            
-                                        </Accordion.Collapse>
-                                    </Form.Group>
-                                    </Form>*/
